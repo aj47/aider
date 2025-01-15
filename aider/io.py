@@ -3,6 +3,7 @@ import os
 import signal
 import time
 import webbrowser
+import re
 from collections import defaultdict
 from dataclasses import dataclass
 from datetime import datetime
@@ -867,7 +868,7 @@ class InputOutput:
         return mdStream
 
     def assistant_output(self, message, pretty=None):
-        show_resp = message
+        message =  re.sub(r'<source>.*?</source>', '', message, flags=re.DOTALL)
 
         # Coder will force pretty off if fence is not triple-backticks
         if pretty is None:
